@@ -1,0 +1,29 @@
+﻿@* 定义HTML文档类型和语言 *@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    @* 设置字符编码为UTF-8 *@
+    <meta charset="utf-8" />
+    @* 设置视口，确保移动设备上的正确显示 *@
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    @* 设置基础URL路径 *@
+    <base href="/" />
+    @* 引入应用程序的样式表 *@
+    <link rel="stylesheet" href="app.css" />
+    @* 引入Blazor组件的样式表 *@
+    <link rel="stylesheet" href="BlazorApp1.styles.css" />
+    @* 引入Apple.Razor组件的样式表 *@
+    <link rel="stylesheet" href="./_content/Leal.Apple.Razor/css/reboot.css" />
+    @* 动态头部内容输出组件 *@
+    <HeadOutlet @rendermode="InteractiveServer" />
+</head>
+
+<body>
+    @* 路由组件，用于处理页面导航 *@
+    <Routes @rendermode="InteractiveServer" />
+    @* 引入Blazor WebAssembly运行时脚本 *@
+    <script src="_framework/blazor.web.js"></script>
+</body>
+
+</html>

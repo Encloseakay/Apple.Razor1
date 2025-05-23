@@ -1,0 +1,16 @@
+﻿@* 引入参数控制相关的用户控件命名空间 *@
+@using Core.UI.Razor.UserCtrls.Parameter
+@* 注入参数视图模型，用于处理参数配置逻辑 *@
+@inject ParameterVM Model
+@* 注入登录视图模型，用于检查用户权限 *@
+@inject LoginVM LoginVM;
+
+@* 参数配置页面的主容器 *@
+<div>
+    @* 使用参数控制组件显示参数配置，根据用户权限设置是否只读 *@
+    <CtrlParameter ReadOnly="@(!LoginVM.IsAdmin)" Model="@Model.Parameters"/>
+</div>
+
+@* 代码部分，当前为空，用于后续添加参数相关的逻辑实现 *@
+@code {
+}

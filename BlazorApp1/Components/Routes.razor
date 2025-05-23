@@ -1,0 +1,10 @@
+﻿@* 定义应用程序的路由系统 *@
+<Router AppAssembly="typeof(Program).Assembly">
+    @* 当找到匹配的路由时显示的内容 *@
+    <Found Context="routeData">
+        @* 使用RouteView组件显示路由内容，并指定默认布局为MainView *@
+        <RouteView RouteData="routeData" DefaultLayout="typeof(Apple.Razor.Views.MainView)" />
+        @* 在导航后自动将焦点设置到h1标题元素 *@
+        <FocusOnNavigate RouteData="routeData" Selector="h1" />
+    </Found>
+</Router>

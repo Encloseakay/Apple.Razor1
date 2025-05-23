@@ -1,0 +1,22 @@
+﻿@* 
+    Router组件用于配置应用的路由系统。
+    AppAssembly指定了包含路由信息的程序集，这里使用MauiProgram对应的程序集。
+*@
+<Router AppAssembly="@typeof(MauiProgram).Assembly">
+    @* 
+        Found模板用于定义当路由匹配成功时的渲染内容。
+        Context="routeData" 表示将当前路由数据传递给内部组件。
+    *@
+    <Found Context="routeData">
+        @* 
+            RouteView组件根据路由数据渲染对应的页面。
+            DefaultLayout指定默认布局，这里使用Apple.Razor.Views.MainView作为页面布局。
+        *@
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(Apple.Razor.Views.MainView)" />
+        @* 
+            FocusOnNavigate组件用于页面导航后自动聚焦到指定的元素。
+            Selector="h1" 表示导航后自动聚焦到页面中的第一个h1标题。
+        *@
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+    </Found>
+</Router>

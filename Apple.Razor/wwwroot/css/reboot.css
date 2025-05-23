@@ -1,0 +1,6 @@
+﻿/* 导入应用主样式表 */
+@import "app.css";
+/* 导入变量定义样式表 */
+@import "var.css";
+/* 导入Leal.Core.UI.Razor组件库的基础样式重置表 */
+@import '/_content/Leal.Core.UI.Razor/css/reboot.css';

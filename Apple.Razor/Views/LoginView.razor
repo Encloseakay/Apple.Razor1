@@ -1,0 +1,67 @@
+﻿@* 引入UI辅助类的命名空间 *@
+@using Core.UI.Razor.Helper
+@* 实现IDisposable接口，用于资源清理 *@
+@implements IDisposable
+@* 注入登录视图模型，用于处理登录逻辑 *@
+@inject LoginVM Model
+@* 注入JavaScript互操作服务，用于与浏览器JavaScript交互 *@
+@inject ExampleJsInterop ExampleJsInterop;
+@* 注入JavaScript运行时服务，用于执行JavaScript代码 *@
+@inject IJSRuntime JSRuntime
+
+@* 登录页面的主容器 *@
+<div class="div1">
+    @* 显示登录页面的图标 *@
+    <input class="sty-border1 image1" type="image" src="./_content/Leal.Apple.Razor/image/ico_messy_doodle.svg" />
+    @* 分隔区域 *@
+    <div class="div2" />
+    @* 登录表单容器 *@
+    <div class="sty-border1 div3">
+        @* 密码输入框，双向绑定到Model.Password *@
+        <input type="password" class="div4" @bind-value="@Model.Password" />
+        @* 分隔区域 *@
+        <div class="div5" />
+        @* 操作员登录按钮，使用自定义MyButton组件 *@
+        <MyButton style="grid-column:1;grid-row:3;" Class="button1_LoginView" ClassChecked="button100_LoginView" IsChecked="@Model.IsOp" Command="@(e=>Model.LoginOp())">操作员</MyButton>
+        @* 分隔区域 *@
+        <div class="div6" />
+        @* 管理员登录按钮，使用自定义MyButton组件 *@
+        <MyButton style="grid-column:3;grid-row:3;" Class="button1_LoginView" ClassChecked="button100_LoginView" IsChecked="@Model.IsAdmin" Command="@(e=>Model.LoginAdmin())">管理员</MyButton>
+    </div>
+</div>
+
+@* 代码部分，包含组件的逻辑实现 *@
+@code {
+    @* 组件初始化时调用的异步方法 *@
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            @* 进入全屏模式 *@
+            await ExampleJsInterop.EnterFullScreen();
+            @* 注册登录事件处理器 *@
+            Model.LoginHandler += LoginHandler;
+            @* 调用基类的初始化方法 *@
+            await base.OnInitializedAsync();
+            @* 检查是否为宽屏显示 *@
+            if (await ExampleJsInterop.GetWidescreenAsync()) return;
+            @* 如果不是宽屏，设置小屏幕样式 *@
+            await JSRuntime.InvokeVoidAsync("eval", "document.documentElement.className = 'SmallMachine'");
+        }
+        catch (Exception) { }
+    }
+
+    @* 登录事件处理方法，用于更新UI状态 *@
+    private void LoginHandler(object? sender, EventArgs e)
+    {
+        @* 触发UI更新 *@
+        InvokeAsync(StateHasChanged);
+    }
+
+    @* 实现IDisposable接口的Dispose方法 *@
+    public void Dispose()
+    {
+        @* 注销登录事件处理器 *@
+        Model.LoginHandler -= LoginHandler;
+    }
+}

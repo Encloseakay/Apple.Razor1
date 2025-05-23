@@ -1,0 +1,40 @@
+﻿@* 引入网络套接字相关的命名空间，用于网络通信 *@
+@using System.Net.Sockets
+@* 实现IDisposable接口，用于资源清理 *@
+@implements IDisposable
+@* 注入JavaScript互操作服务，用于与浏览器JavaScript交互 *@
+@inject ExampleJsInterop ExampleJsInterop
+
+@* 主容器div，使用网格布局，高度和宽度占满父容器 *@
+<div style="display:inline-grid;height:100%;width:100%;grid-template-columns:@ColumnDefinitions;">
+    @* 左侧面板，占据第一列 *@
+    <div style="grid-column:1;" class="sty-border1">
+        @* 左侧面板内容区域 *@
+    </div>
+
+    @* 右侧面板，占据第五列 *@
+    <div style="grid-column:5;" class="sty-border1">
+        @* 右侧面板内容区域 *@
+    </div>
+</div>
+
+@* 代码部分，包含组件的逻辑实现 *@
+@code {
+    @* 定义网格列宽度的字符串，默认值定义了5列的宽度 *@
+    private string ColumnDefinitions = "320px 16px 1fr 16 320px";
+
+    @* 组件初始化时调用的异步方法 *@
+    protected override async Task OnInitializedAsync()
+    {
+        @* 检查是否为宽屏显示 *@
+        if (await ExampleJsInterop.GetWidescreenAsync()) return;
+        @* 如果不是宽屏，则调整列宽定义，隐藏中间列 *@
+        ColumnDefinitions = "1fr 16px 0px 0px 1fr";
+    }
+
+    @* 实现IDisposable接口的Dispose方法 *@
+    public void Dispose()
+    {
+        @* 资源清理代码，当前为空 *@
+    }
+}

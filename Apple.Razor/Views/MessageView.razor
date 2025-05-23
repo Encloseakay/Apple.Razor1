@@ -1,0 +1,65 @@
+﻿@* 注入消息视图模型，用于处理消息显示逻辑 *@
+@inject MessageVM Model
+@* 注入主视图模型，用于处理主界面逻辑 *@
+@inject MainVM MainVM
+@* 实现IDisposable接口，用于资源清理 *@
+@implements IDisposable
+
+@* 消息页面的主容器，使用网格布局 *@
+<div style="display:inline-grid;grid-template-rows:var(--height1) var(--height2) 1fr;grid-template-columns:1fr var(--width2) 1fr;height:100%;width:100%;">
+    @* 左侧消息列表区域，占据1-4行，第1列 *@
+    <div style="grid-row:1/4;grid-column:1;padding:8px;display:flex;flex-direction:column;" class="sty-border1">
+        @* 遍历当前消息列表并显示 *@
+        @foreach (var t in Model.MessagesNow)
+        {
+            @* 显示消息时间和内容，使用消息指定的文本颜色 *@
+            <label style="color:@t.TextColor;">@($"{t.DateTime} {t.Text}")</label>
+        }
+    </div>
+    @* 顶部工具栏区域，第1行，第3列 *@
+    <div style="grid-row:1;grid-column:3;display:inline-grid;grid-template-columns:1fr var(--width2) auto var(--width2) auto">
+        @* 显示当前时间 *@
+        <label style="grid-column:1;display:flex;justify-content:center;align-items:center;color:var(--secondaryTextColor);" class="sty-border1">@DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")</label>
+        @* 报警清除按钮 *@
+        <MyButton1 style="grid-column:3;padding:0px 16px 0px 16px;color:var(--secondaryTextColor);" Class="sty-border1">报警清除</MyButton1>
+        @* 历史清除按钮 *@
+        <MyButton1 style="grid-column:5;padding:0px 16px 0px 16px;color:var(--secondaryTextColor);" Class="sty-border1">历史清除</MyButton1>
+    </div>
+    @* 右侧历史消息区域，第3行，第3列 *@
+    <div style="grid-row:3;grid-column:3;padding:8px;display:flex;flex-direction:column;" class="sty-border1">
+        @* 遍历历史消息列表并显示 *@
+        @foreach (var t in Model.MessageHistory)
+        {
+            @* 显示历史消息时间和内容，使用消息指定的文本颜色 *@
+            <label style="color:@t.TextColor;">@($"{t.DateTime} {t.Text}")</label>
+        }
+    </div>
+</div>
+
+@* 代码部分，包含组件的逻辑实现 *@
+@code {
+    @* 组件初始化时调用的方法 *@
+    protected override void OnInitialized()
+    {
+        @* 调用基类的初始化方法 *@
+        base.OnInitialized();
+        @* 注册1秒周期事件处理器 *@
+        MainVM.Cycle1sHandler += Cycle1sHandler;
+        @* 设置状态更新委托 *@
+        Model.StateHasChanged=() => InvokeAsync(StateHasChanged);
+    }
+
+    @* 实现IDisposable接口的Dispose方法 *@
+    public void Dispose()
+    {
+        @* 注销1秒周期事件处理器 *@
+        MainVM.Cycle1sHandler -= Cycle1sHandler;
+    }
+
+    @* 1秒周期事件处理方法，用于更新UI状态 *@
+    private void Cycle1sHandler(object? sender, EventArgs e)
+    {
+        @* 触发UI更新 *@
+        InvokeAsync(StateHasChanged);
+    }
+}

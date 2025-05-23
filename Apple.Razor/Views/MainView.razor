@@ -1,0 +1,137 @@
+﻿@* 引入辅助类命名空间，包含通用工具方法 *@
+@using Apple.Razor.Helper
+@* 引入视图模型命名空间，包含所有视图模型类 *@
+@using Apple.Razor.ViewModels
+@* 继承布局组件基类，提供基础布局功能 *@
+@inherits LayoutComponentBase
+@* 注入主视图模型，用于处理主页面的业务逻辑 *@
+@inject MainVM Model
+@* 注入参数视图模型，用于处理系统参数 *@
+@inject ParameterVM ParameterVM
+@* 注入登录视图模型，用于处理用户认证 *@
+@inject LoginVM LoginVM
+@* 实现IDisposable接口，用于资源清理 *@
+@implements IDisposable
+
+@* 主容器div，包含整个页面的布局 *@
+<div class="div1">
+    @* 顶部工具栏div，包含导航按钮和功能按钮 *@
+    <div class="div3">
+        @* 主页按钮：点击切换到HomeView视图 *@
+        <MyButton1 style="grid-column:1;" 
+                  Class="iconfont icon-home button1_MainView sty-border1" 
+                  ClassChecked="button100_MainView" 
+                  Command=@(e=>ViewSwitch?.SwithNowView(nameof(HomeView))) 
+                  IsChecked=@(ViewSwitch?.NowViewKey==nameof(HomeView)) />
+
+        @* 选项按钮：点击切换到OptionsView视图 *@
+        <MyButton1 style="grid-column:2;" 
+                  Class="iconfont icon-ai-tool button1_MainView sty-border1" 
+                  ClassChecked="button100_MainView" 
+                  Command=@(e=>ViewSwitch?.SwithNowView(nameof(OptionsView))) 
+                  IsChecked=@(ViewSwitch?.NowViewKey==nameof(OptionsView)) />
+
+        @* 视觉按钮：点击切换到VisionView视图 *@
+        <MyButton1 style="grid-column:3;" 
+                  Class="iconfont icon-xiangji button1_MainView sty-border1" 
+                  ClassChecked="button100_MainView" 
+                  Command=@(e=>ViewSwitch?.SwithNowView(nameof(VisionView))) 
+                  IsChecked=@(ViewSwitch?.NowViewKey==nameof(VisionView)) />
+
+        @* 消息按钮：点击切换到MessageView视图 *@
+        <MyButton1 style="grid-column:4;" 
+                  Class="iconfont icon-xiaoxi button1_MainView sty-border1" 
+                  ClassChecked="button100_MainView" 
+                  Command=@(e=>ViewSwitch?.SwithNowView(nameof(MessageView))) 
+                  IsChecked=@(ViewSwitch?.NowViewKey==nameof(MessageView)) />
+
+        @* 图表按钮：点击切换到ChartView视图 *@
+        <MyButton1 style="grid-column:5;" 
+                  Class="iconfont icon-a-tubiao1-copy button1_MainView sty-border1" 
+                  ClassChecked="button100_MainView" 
+                  Command=@(e=>ViewSwitch?.SwithNowView(nameof(ChartView))) 
+                  IsChecked=@(ViewSwitch?.NowViewKey==nameof(ChartView)) />
+
+        @* 安全按钮：显示连接状态 *@
+        <MyButton1 style="grid-column:6;" 
+                  Class="button1_MainView button2_MainView sty-border1" 
+                  ClassChecked="button101_MainView" 
+                  IsChecked="@(!Model?.Connected)">Secote</MyButton1>
+
+        @* 启动按钮：使用参数视图模型中的启动参数 *@
+        <MyButton1 style="grid-column:7;" 
+                  Class="iconfont icon-start button1_MainView sty-border1" 
+                  ClassChecked="button102_MainView" 
+                  Model="@ParameterVM.GetParameter("btnStart")" />
+
+        @* 暂停按钮：使用参数视图模型中的暂停参数 *@
+        <MyButton1 style="grid-column:8;" 
+                  Class="iconfont icon-pause button1_MainView sty-border1" 
+                  ClassChecked="button103_MainView" 
+                  Model="@ParameterVM.GetParameter("btnPause")" />
+
+        @* 停止按钮：使用参数视图模型中的停止参数 *@
+        <MyButton1 style="grid-column:9;" 
+                  Class="iconfont icon-stop button1_MainView sty-border1" 
+                  ClassChecked="button103_MainView" 
+                  Model="@ParameterVM.GetParameter("btnStop")" />
+
+        @* 用户按钮：点击切换到LoginView视图，根据登录状态显示不同样式 *@
+        <MyButton1 style="grid-column:11;margin-right:0px;" 
+                  Class="iconfont icon-yonghuzu button1_MainView sty-border1" 
+                  ClassChecked="button100_MainView" 
+                  Command="@(e=>ViewSwitch?.SwithNowView(nameof(LoginView)))" 
+                  IsChecked=@(LoginVM.IsLogin) />
+    </div>
+
+    @* 内容区域div，显示当前选中的视图 *@
+    <div class="div4">
+        @* 如果视图切换器未初始化，显示加载提示 *@
+        @if (ViewSwitch is null)
+        {
+            <h6>Loading...</h6>
+        }
+        else
+        {
+            @* 显示当前选中的视图内容 *@
+            @ViewSwitch.NowView
+        } 
+    </div>
+    @* 对话框提供者组件，用于显示各种对话框 *@
+    <DialogProvider/>
+</div>
+
+@* 代码部分，包含组件的逻辑实现 *@
+@code
+{
+    @* 获取视图切换器实例，用于管理视图切换 *@
+    public ViewSwitch<RenderFragment>? ViewSwitch => Model.MainViewSwitch;
+
+    @* 组件初始化时调用，注册事件处理器 *@
+    protected override void OnInitialized()
+    {
+        // 注册登录事件处理器
+        LoginVM.LoginHandler += Cycle1sHandler;
+        // 注册1秒周期事件处理器
+        Model.Cycle1sHandler += Cycle1sHandler;
+        base.OnInitialized();
+    }
+
+    @* 实现IDisposable接口，用于清理资源 *@
+    public void Dispose()
+    {
+        // 注销1秒周期事件处理器
+        Model.Cycle1sHandler -= Cycle1sHandler;
+        // 注销登录事件处理器
+        LoginVM.LoginHandler -= Cycle1sHandler;
+    }
+
+    @* 1秒周期事件处理方法，用于更新UI *@
+    private void Cycle1sHandler(object? sender, EventArgs e)
+    {
+        // 异步调用状态更新方法
+        InvokeAsync(StateHasChanged);
+    }
+}
+
+

@@ -1,0 +1,63 @@
+﻿<!-- 项目文件，使用Razor SDK -->
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <!-- 项目属性配置组 -->
+  <PropertyGroup>
+    <!-- 目标框架为.NET 8.0 -->
+    <TargetFramework>net8.0</TargetFramework>
+    <!-- 启用可空引用类型 -->
+    <Nullable>enable</Nullable>
+    <!-- 启用隐式using指令 -->
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <!-- 支持的平台配置组 -->
+  <ItemGroup>
+    <!-- 支持浏览器平台 -->
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
+
+  <!-- NuGet包引用配置组 -->
+  <ItemGroup>
+    <!-- 引用Leal.Core.UI.Razor包，提供核心UI组件 -->
+    <PackageReference Include="Leal.Core.UI.Razor" Version="0.0.1.1" />
+    <!-- 引用Leal.UI.Application包，提供应用程序功能 -->
+    <PackageReference Include="Leal.UI.Application" Version="3.1.5.1" />
+    <!-- 引用Microsoft.AspNetCore.Components.Web包，提供Blazor Web组件支持 -->
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.15" />
+  </ItemGroup>
+
+  <!-- 包发布配置组 -->
+  <PropertyGroup>
+    <!-- 作者信息 -->
+    <Authors>Leal</Authors>
+    <!-- 版本前缀 -->
+    <VersionPrefix>0.0.1.1</VersionPrefix>
+    <!-- 禁用构建时生成包 -->
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <!-- 包输出路径 -->
+    <PackageOutputPath>$(SolutionDir)\Packages\ProjectLibrary</PackageOutputPath>
+    <!-- 包ID -->
+    <PackageId>Leal.$(AssemblyName)</PackageId>
+    <!-- 版权信息 -->
+    <Copyright>$(Authors)</Copyright>
+    <!-- 包图标 -->
+    <PackageIcon>appicon.png</PackageIcon>
+    <!-- 要求接受许可证 -->
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <!-- 使用MIT许可证 -->
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <!-- 包标签 -->
+    <PackageTags>$(CommonTags);$(PackageTags)</PackageTags>
+  </PropertyGroup>
+
+  <!-- 资源文件配置组 -->
+  <ItemGroup>
+    <!-- 包含应用程序图标 -->
+    <None Include="..\..\..\Projects\Project.Resources\AppIcon\appicon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

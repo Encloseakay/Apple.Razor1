@@ -1,0 +1,47 @@
+﻿@* 引入IO控制相关的用户控件命名空间 *@
+@using Core.UI.Razor.UserCtrls.InOut
+@* 注入IO视图模型，用于处理IO配置逻辑 *@
+@inject InOutVM Model;
+
+@* IO配置页面的主容器 *@
+<div class="style-div4">
+    @* 顶部工具栏，使用边框样式 *@
+    <div class="style-div5 sty-border1">
+        @* 输入模式按钮，点击时切换到输入模式 *@
+        <MyButton style="grid-column:1;" Class="style-button1" ClassChecked="style-button100" IsChecked="@Model.IsInput" Command="@(e=>Model.IsInput=true)">输入</MyButton>
+        @* 输出模式按钮，点击时切换到输出模式 *@
+        <MyButton style="grid-column:2;" Class="style-button1" ClassChecked="style-button100" IsChecked="@(!Model.IsInput)" Command="@(e=>Model.IsInput=false)">输出</MyButton>
+        @* 上一个索引按钮，点击时减少当前索引值 *@
+        <MyButton style="grid-column:3;" Class="iconfont icon-zuojiantoujiacu style-button1 style-button3" Command="@(e=>Model.Index=Model.Index-1)"></MyButton>
+        @* 索引输入框，用于直接输入索引值 *@
+        <MyEntry style="grid-column:4;" Class="style-entry1" ExecuteNum="@WriteIndex">@Model.Index</MyEntry>
+        @* 下一个索引按钮，点击时增加当前索引值 *@
+        <MyButton style="grid-column:5;" Class="iconfont icon-youjiantoujiacu style-button1 style-button3" Command="@(e=>Model.Index=Model.Index+1)"></MyButton>
+    </div>
+    @* IO列表显示区域 *@
+    <div class="style-div6 style-div7">
+        @* 遍历IO列表并显示每个IO项 *@
+        @foreach (var t in Model.InOuts)
+        {
+            @* 使用IO控制组件显示每个IO项 *@
+            <CtrlInOut Model="@t" Style="height:32px;width:320px;"/>
+        }
+    </div>
+</div>
+
+@* 代码部分，包含组件的逻辑实现 *@
+@code {
+    @* 处理索引值写入的方法 *@
+    private void WriteIndex(double index)
+    {
+        @* 尝试将输入值转换为整数 *@
+        int i;
+        if (!int.TryParse(index.ToString(), out i)) return;
+        @* 更新模型中的索引值 *@
+        Model.Index = i;
+        @* 触发UI更新 *@
+        StateHasChanged();
+    }
+}
+
+

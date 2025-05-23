@@ -1,0 +1,33 @@
+/* 错误UI容器的样式 */
+#blazor-error-ui {
+    /* 设置背景色为浅黄色 */
+    background: lightyellow;
+    /* 固定在底部 */
+    bottom: 0;
+    /* 添加顶部阴影效果 */
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    /* 默认隐藏 */
+    display: none;
+    /* 固定在左侧 */
+    left: 0;
+    /* 设置内边距 */
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    /* 使用固定定位 */
+    position: fixed;
+    /* 宽度占满 */
+    width: 100%;
+    /* 设置较高的z-index确保显示在最上层 */
+    z-index: 1000;
+}
+
+/* 关闭按钮的样式 */
+#blazor-error-ui .dismiss {
+    /* 鼠标悬停时显示手型光标 */
+    cursor: pointer;
+    /* 使用绝对定位 */
+    position: absolute;
+    /* 距离右侧的距离 */
+    right: 0.75rem;
+    /* 距离顶部的距离 */
+    top: 0.5rem;
+}

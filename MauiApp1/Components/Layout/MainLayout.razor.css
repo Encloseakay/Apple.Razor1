@@ -1,0 +1,93 @@
+/* 页面主容器样式：相对定位，使用弹性布局，垂直方向排列 */
+.page {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 主内容区域样式：占据剩余空间 */
+main {
+    flex: 1;
+}
+
+/* 侧边栏样式：使用渐变背景色 */
+.sidebar {
+    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+}
+
+/* 顶部工具栏样式：浅灰色背景，底部边框，右对齐，固定高度 */
+.top-row {
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #d6d5d5;
+    justify-content: flex-end;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+}
+
+/* 顶部工具栏中的链接样式：不换行，左边距，无下划线 */
+.top-row ::deep a, .top-row ::deep .btn-link {
+    white-space: nowrap;
+    margin-left: 1.5rem;
+    text-decoration: none;
+}
+
+/* 顶部工具栏链接悬停效果：显示下划线 */
+.top-row ::deep a:hover, .top-row ::deep .btn-link:hover {
+    text-decoration: underline;
+}
+
+/* 第一个链接样式：文本溢出时显示省略号 */
+.top-row ::deep a:first-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 移动设备适配：屏幕宽度小于640.98px时的样式 */
+@media (max-width: 640.98px) {
+    /* 顶部工具栏两端对齐 */
+    .top-row {
+        justify-content: space-between;
+    }
+
+    /* 移除链接左边距 */
+    .top-row ::deep a, .top-row ::deep .btn-link {
+        margin-left: 0;
+    }
+}
+
+/* 桌面设备适配：屏幕宽度大于641px时的样式 */
+@media (min-width: 641px) {
+    /* 页面主容器改为水平排列 */
+    .page {
+        flex-direction: row;
+    }
+
+    /* 侧边栏固定宽度和高度，粘性定位 */
+    .sidebar {
+        width: 250px;
+        height: 100vh;
+        position: sticky;
+        top: 0;
+    }
+
+    /* 顶部工具栏粘性定位，确保始终可见 */
+    .top-row {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+
+    /* 认证状态下的第一个链接样式 */
+    .top-row.auth ::deep a:first-child {
+        flex: 1;
+        text-align: right;
+        width: 0;
+    }
+
+    /* 顶部工具栏和文章内容的内边距 */
+    .top-row, article {
+        padding-left: 2rem !important;
+        padding-right: 1.5rem !important;
+    }
+}

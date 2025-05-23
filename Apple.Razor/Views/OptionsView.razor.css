@@ -1,0 +1,19 @@
+﻿.div_1 {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    background-color: var(--pageBackgroundColor);
+}
+
+.div_2 {
+    grid-row: 1;
+    display: inline-grid;
+    grid-column: auto auto auto auto;
+    height: var(--height1);
+    width: var(--width1);
+    justify-items:center;
+}
+
+.div_3 {
+    grid-row: 2;
+    background-color: var(--pageBackgroundColor);
+}

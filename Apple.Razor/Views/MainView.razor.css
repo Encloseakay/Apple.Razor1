@@ -1,0 +1,67 @@
+﻿/*button*/
+::deep .button1_MainView {
+    height: var(--height);
+    width: var(--width);
+    background-color: var(--primaryColor);
+    font-size: calc(var(--height)/2);
+    color: var(--pageBackgroundColor);
+    outline: none;
+    outline-color: rgba(255,255,255,0);
+    margin-right: var(--width2);
+}
+    ::deep .button1_MainView:active {
+        transform: translateY(4px);
+    }
+
+::deep .button2_MainView {
+    width: calc(var(--width)*2);
+    outline: none;
+    outline-color: rgba(255,255,255,0);
+}
+
+::deep .button100_MainView {
+    background-color: var(--secondaryColor);
+}
+
+::deep .button101_MainView {
+    background-color: var(--alarmColor);
+}
+
+::deep .button102_MainView {
+    background-color: var(--runColor);
+}
+
+::deep .button103_MainView {
+    background-color: var(--stopColor);
+}
+
+/*div*/
+.div1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: inline-grid;
+    grid-template-rows: auto 1fr;
+    background-color: var(--pageBackgroundColor);
+}
+
+.div3 {
+    grid-row: 1;
+    display: inline-grid;
+    grid-template-columns: auto auto auto auto auto auto auto auto auto 1fr auto;
+    padding-top: var(--height2);
+    padding-bottom: var(--height2);
+    padding-left: var(--width2);
+    padding-right: var(--width2);
+    background-color: var(--pageBackgroundColor);
+}
+
+.div4 {
+    grid-row: 2;
+    padding-left: var(--width2);
+    padding-right: var(--width2);
+    background-color: var(--pageBackgroundColor);
+    padding-bottom: var(--height2);
+}

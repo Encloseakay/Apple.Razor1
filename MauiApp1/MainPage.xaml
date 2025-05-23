@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- 
+    主页面的XAML定义
+    这个文件定义了应用程序的主界面布局
+    包含了一个Blazor WebView用于显示Blazor内容
+-->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:MauiApp1"
+             x:Class="MauiApp1.MainPage">
+
+    <!-- 
+        Blazor WebView组件
+        这个组件允许在MAUI应用中嵌入Blazor Web内容
+        HostPage指定了Blazor应用的HTML入口文件
+    -->
+    <BlazorWebView x:Name="blazorWebView" HostPage="wwwroot/index.html">
+        <!-- 
+            定义Blazor根组件
+            这里指定了Blazor应用的入口组件
+        -->
+        <BlazorWebView.RootComponents>
+            <!-- 
+                指定根组件为Routes组件
+                这个组件负责处理Blazor应用的路由
+                并将其挂载到id为app的HTML元素上
+            -->
+            <RootComponent Selector="#app" ComponentType="{x:Type local:Components.Routes}" />
+        </BlazorWebView.RootComponents>
+    </BlazorWebView>
+
+</ContentPage>

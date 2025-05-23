@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 
+    应用程序的XAML定义
+    这个文件定义了应用程序级别的资源和样式
+    包括全局样式、主题、资源字典等
+-->
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:MauiApp1"
+             x:Class="MauiApp1.App">
+    <!-- 
+        应用程序资源定义
+        这里可以定义全局样式、颜色、字体等资源
+        这些资源可以在整个应用程序中重复使用
+    -->
+    <Application.Resources>
+        <ResourceDictionary>
+            <!--
+                .NET MAUI页面样式信息
+                这里可以添加自定义样式和主题
+                请参考文档：
+                https://go.microsoft.com/fwlink/?linkid=2282329
+            -->
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

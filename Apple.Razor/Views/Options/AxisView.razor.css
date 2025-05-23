@@ -1,0 +1,6 @@
+﻿::deep .div1_AxisView {
+    --height_1: calc(100vh - var(--height2) - var(--height) - var(--height2) - var(--height2) - 56px - 8px);
+    overflow-y: auto;
+    max-height: var(--height_1);
+    scrollbar-width: none;
+}
